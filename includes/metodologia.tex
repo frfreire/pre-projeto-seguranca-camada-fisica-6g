@@ -1,0 +1,51 @@
+\section{METODOLOGIA}
+
+\subsection{Fundamentação Epistemológica e Tipo de Pesquisa}
+
+Esta pesquisa adota um paradigma epistemológico \textbf{positivista}, buscando explicações causais e quantificáveis dos fenômenos físicos para a engenharia de segurança. O método de pesquisa será a \textbf{modelagem e simulação computacional}, justificado pela inexistência de plataformas de hardware 6G THz abertas e pelo alto custo e complexidade da prototipação experimental. A simulação permite a análise controlada e reprodutível de múltiplos cenários e parâmetros, embora suas conclusões dependam da fidelidade dos modelos físicos empregados.
+
+\subsection{Modelagem do Canal THz}
+
+A caracterização do canal será a base da tese.
+\begin{alineas}
+    \item \textbf{Absorção Molecular:} A atenuação atmosférica será modelada em alta resolução espectral (linha-a-linha) utilizando a base de dados \textbf{HITRAN 2020} \cite{Gordon2022} e os procedimentos da recomendação \textbf{ITU-R P.676-12} \cite{ITU2019}. Serão simulados parâmetros atmosféricos variáveis (T: 15-35°C, Umidade Relativa: 20-80\%, Pressão: 1 atm).
+    \item \textbf{Multipercurso e Espalhamento:} Modelos de \textbf{ray-tracing} 3D serão implementados em MATLAB ou Python (usando bibliotecas como Sionna/Wireless Insite) para capturar as reflexões e espalhamentos difusos em cenários específicos.
+    \item \textbf{Cenários:}
+        \begin{enumerate}
+            \item \textit{Indoor} (Industrial): Fábrica de $50 \times 50$ m, com obstáculos metálicos (maquinário).
+            \item \textit{Outdoor} (Urbano): "Street canyon" com 100 m de comprimento, edifícios e baixa densidade de vegetação.
+        \end{enumerate}
+    \item \textbf{Validação do Modelo:} A entropia disponível será calculada (e.g., $\mathrm{H}(X)$) e a decorrelação espacial será validada comparando a função de autocorrelação $R(\Delta d)$ dos parâmetros do canal simulado com trabalhos teóricos \cite{Wang2017mmWave}.
+\end{alineas}
+
+\subsection{Desenho dos Protocolos de Segurança}
+
+\begin{alineas}
+    \item \textbf{Modelo de Adversário:} Será considerado um adversário \textbf{passivo} (Eve) que intercepta todas as transmissões, localizado a uma distância $d_E > \lambda/2$ dos nós legítimos.
+    \item \textbf{Protocolo de Geração de Chaves (SKG):} O processo seguirá o fluxograma padrão (sondagem $\rightarrow$ quantização $\rightarrow$ reconciliação $\rightarrow$ amplificação).
+        \begin{enumerate}
+            \item \textit{Sondagem:} Medição da atenuação em $N$ sub-bandas THz (nas janelas e picos de absorção).
+            \item \textit{Quantização:} Teste de quantizadores multi-nível adaptativos (baseados na média e variância do canal) versus quantização binária simples.
+            \item \textit{Reconciliação:} Implementação do protocolo \textbf{Cascade} \cite{Brassard1993}, otimizando o número de passagens para o CIR esparso do THz.
+            \item \textit{Amplificação:} Aplicação de funções hash universais (e.g., SHA-256) sobre os bits reconciliados.
+        \end{enumerate}
+    \item \textbf{Protocolo de Autenticação:}
+        \begin{enumerate}
+            \item \textit{Extração de Features:} A assinatura (PUF) será extraída do PDP, usando características como: energia recebida, atraso médio, \textit{RMS delay spread} e os tempos de chegada e amplitudes dos primeiros $K$ raios.
+            \item \textit{Detecção:} Será usado um teste de hipótese (e.g., Neyman-Pearson) para decidir entre $H_0$ (usuário legítimo) e $H_1$ (adversário), com base na distância (e.g., Euclidiana ou de correlação) entre a assinatura medida e um \textit{template} armazenado.
+        \end{enumerate}
+\end{alineas}
+
+\subsection{Plano de Simulação e Análise Estatística}
+
+\begin{alineas}
+    \item \textbf{Ferramentas:} MATLAB R2024a e/ou Python 3.10 (com bibliotecas SciPy, NumPy, Scikit-learn).
+    \item \textbf{Execução:} Simulações de Monte Carlo com $10^5$ iterações por cenário para garantir significância estatística.
+    \item \textbf{Cenários de Teste:} Variação de distância Alice-Bob (1m a 100m), distância de Eve, mobilidade (0 a 3 m/s), e número de sub-bandas de sondagem.
+    \item \textbf{Métricas de Análise:}
+        \begin{enumerate}
+            \item SKG: Taxa de Geração de Chave (KGR) em bits/s, Taxa de Discordância de Bits (KDR) e Entropia da Chave (bits/símbolo).
+            \item Autenticação: Probabilidade de Detecção (Pd) e Probabilidade de Falso Alarme (Pfa), gerando curvas ROC.
+        \end{enumerate}
+    \item \textbf{Análise Estatística:} Os resultados serão apresentados com intervalos de confiança de 95\%. Testes de significância (como ANOVA) serão usados para validar o impacto dos diferentes parâmetros (e.g., umidade vs. distância) nas métricas de desempenho.
+\end{alineas}

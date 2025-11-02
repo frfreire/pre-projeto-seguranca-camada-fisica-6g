@@ -1,0 +1,82 @@
+% ---
+% INICIO DAS CUSTOMIZACOES (ARQUIVO capa.sty)
+% ---
+\ProvidesPackage{capa}[2025/XX/XX Customizacao para Doutorado em Engenharia Eletrica - UnB]
+
+% Comandos para os novos campos
+\newcommand{\linhadepesquisa}[1]{\gdef\@linhadepesquisa{#1}}
+\newcommand{\areadeconcentracao}[1]{\gdef\@areadeconcentracao{#1}}
+\newcommand{\imprimirlinhadepesquisa}{\@linhadepesquisa}
+\newcommand{\imprimirareadeconcentracao}{\@areadeconcentracao}
+
+\makeatletter % Necessário para usar \@areadeconcentracao etc.
+
+% ---
+% CAPA (AGORA CONTÉM O LAYOUT DA FOLHA DE ROSTO)
+% ---
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+  \begin{center}
+
+  % Logo da universidade
+  % (O caminho 'imagens/unb_bandeira.png' vem do seu .sty antigo)
+  \includegraphics[width=70mm]{imagens/unb_bandeira.png}\\[0.5cm]
+
+  % Instituicao (UnB, FT, PPGEE) - Puxa do \instituicao [cite: 1, 2, 3]
+  {\ABNTEXchapterfont\Large\imprimirinstituicao}
+      
+  \vspace*{1.5cm}
+      
+  % Autor [cite: 5]
+  {\ABNTEXchapterfont\large\imprimirautor}
+
+  \vspace*{\fill}
+
+  % Titulo [cite: 6]
+  \begin{center}
+  \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+  \end{center}
+
+  \vspace*{\fill}
+
+  % Preambulo (O texto do "Pre-projeto apresentado...") [cite: 7]
+  \abntex@ifnotempty{\imprimirpreambulo}{%
+    \hspace{.45\textwidth} % Alinhado à direita
+    \begin{minipage}{.5\textwidth}
+    \SingleSpacing
+    \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+  }%
+
+  % Novos campos: Area e Linha [cite: 8, 9]
+  \abntex@ifnotempty{\@areadeconcentracao}{%
+      \noindent % Alinha à esquerda
+      \begin{minipage}{\textwidth}
+      \SingleSpacing
+      \textbf{Área de Concentração:} \imprimirareadeconcentracao \\
+      \abntex@ifnotempty{\@linhadepesquisa}{%
+          \textbf{Linha de Pesquisa:} \imprimirlinhadepesquisa
+      }%
+      \end{minipage}
+      \vspace*{\fill}
+  }%
+
+  % Local e Data [cite: 10, 11]
+  {\large\imprimirlocal}
+  \par
+  {\large\imprimirdata}
+  \vspace*{1cm}
+
+  \end{center}
+  \end{capa}
+}
+
+% folha de rosto - DEIXAR VAZIA para não ter conflito
+\renewcommand{\folhaderostocontent}{}
+
+\makeatother
+
+% ---
+% FIM DAS CUSTOMIZACOES
+% ---

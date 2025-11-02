@@ -1,0 +1,117 @@
+%%%%%classe do documento%%%%%
+\documentclass[article,12pt, a4paper]{abntex2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%Pacotes%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[num]{abntex2cite}
+\citebrackets[]
+\usepackage{capa} % Carrega o capa.sty modificado
+\usepackage{indentfirst}
+\usepackage{cmap}
+\usepackage{amsmath,amsfonts,amssymb}
+% \usepackage{booktabs} % Já carregado acima
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+%\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx} 
+\usepackage{enumitem} 
+
+% Configuração de margens
+\geometry{
+    a4paper,
+    left=2.5cm,
+    right=2.5cm,
+    top=2.3cm,
+    bottom=2.3cm
+}
+
+% Configurações de espaçamento
+\singlespacing
+\setlength{\parindent}{1cm}
+
+% Reduzir espaçamentos entre seções
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+
+\titleformat{\subsection}[block]{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{10pt plus 3pt minus 2pt}{4pt plus 1pt minus 1pt}
+
+\titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 1pt}{3pt plus 1pt minus 1pt}
+
+% Configurações TikZ
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+% Definir cores
+\definecolor{qpskred}{RGB}{255,0,0}
+\definecolor{qpskblue}{RGB}{0,0,255}
+\definecolor{qpskgreen}{RGB}{0,128,0}
+\definecolor{qpskorange}{RGB}{255,165,0}
+
+% Configuração de hiperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=blue
+}
+
+% Tirando impressão frente e verso
+\setboolean{@twoside}{false}
+
+% --- DADOS GERAIS (ATUALIZADOS) ---
+\titulo{CARACTERIZAÇÃO DE PRIMITIVAS DE SEGURANÇA FÍSICA NO DOMÍNIO TERAHERTZ PARA REDES 6G}
+\autor{FABRICIO RODRIGUES FREIRE}
+\local{Brasília}
+\data{2025}
+
+% 1. Instituição atualizada para "Programa..." como no modelo [cite: 1, 2, 3]
+\instituicao{Universidade de Brasília \par 
+             Faculdade de Tecnologia \par 
+             Programa de Pós-Graduação em Engenharia Elétrica}
+
+% 2. Tipo de trabalho atualizado com o texto EXATO que você forneceu [cite: 7]
+\tipotrabalho{Pré-projeto apresentado ao Programa de Pós-Graduação em Engenharia Elétrica da Faculdade de Tecnologia (PPGEE-FT/UnB), como exigência parcial para preenchimento de vaga no Curso de Doutorado Acadêmico.}
+
+% 3. Novos campos adicionados (baseado no modelo [cite: 8, 9] e nos seus dados)
+\areadeconcentracao{Telecomunicações e Redes de Comunicação}
+\linhadepesquisa{Comunicações Móveis}
+% --- FIM DOS DADOS GERAIS ---
+
+
+\begin{document}
+
+\imprimircapa % Este comando irá gerar a capa no formato correto
+
+\textual
+
+% Incluir seções
+\input{includes/introducao}
+\input{includes/referencial_teorico}
+\input{includes/justificativa}
+\input{includes/objetivos}
+\input{includes/metodologia}
+\input{includes/cronograma}
+
+% Bibliografia
+\newpage
+\bibliography{bibliografia}
+\bibliographystyle{abntex2-num}
+
+\end{document}

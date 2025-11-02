@@ -1,0 +1,9 @@
+\section{Justificativa}
+
+A revisão sistemática da literatura revela ausência de soluções que integrem algoritmos de coordenação pós-quântica com coexistência multi-standard em redes IoT móveis. Pesquisas atuais abordam estas dimensões isoladamente, sem considerar a convergência entre coordenação de múltiplos padrões e vulnerabilidades criptográficas futuras.
+
+A fragmentação de padrões de comunicação móvel resulta em ineficiências algorítmicas significativas. O crescimento das redes IoT demanda algoritmos de coordenação que garantam coexistência eficiente entre tecnologias heterogêneas \cite{GrandView2024}, especialmente considerando a integração emergente entre LoRaWAN e 5G \cite{Elgendi2020_LoRaWAN5GRoaming} e a necessidade de handover eficiente em redes LPWAN heterogêneas \cite{Liotta2020_VerticalHandoverLPWAN}.
+
+A ameaça quântica exige resposta algorítmica proativa. O algoritmo de Shor compromete a segurança de sistemas baseados em criptografia clássica \cite{Shor1997}, demandando transição urgente para primitivas pós-quânticas em comunicações móveis \cite{NIST2024}. Implementações práticas de ML-KEM em redes 5G demonstram viabilidade técnica \cite{Khan2025_ML_KEM_5G}, mas requerem desenvolvimento de algoritmos específicos para coordenação multi-standard \cite{5GAmericas2025_PostQuantum}.
+
+Os algoritmos propostos têm potencial de influenciar padrões futuros para coordenação IoT móvel segura, especialmente em infraestruturas críticas que demandam coexistência multi-fornecedor com garantias de segurança quântica. A convergência entre energy harvesting adaptativo \cite{Delgado2023_AdaptiveLoRaBatteryless} e coordenação distribuída segura \cite{Maheshwari2024_5GWiFiCoexistence} representa lacuna científica que esta pesquisa endereça através de arquiteturas sustentáveis para redes móveis futuras \cite{Hoque2024_PQCMobileNetworks}.

@@ -1,0 +1,27 @@
+\section{INTRODUÇÃO}
+
+A sexta geração (6G) de redes sem fio impulsiona a exploração da faixa de Terahertz (THz) (0.1-10 THz) para alcançar taxas de transmissão de terabits por segundo (Tbps) \cite{Rappaport2019}. Contudo, essa nova fronteira de conectividade massiva expõe vulnerabilidades críticas de segurança. A criptografia convencional, baseada em complexidade computacional, enfrenta ameaças de ataques quânticos e impõe um ônus significativo de gerenciamento de chaves em redes de Internet das Coisas (IoT) com trilhões de dispositivos de recursos limitados \cite{Saad2021, Alagic2020}.
+
+Neste contexto, a Segurança da Camada Física (PLS) emerge como uma abordagem complementar, explorando as características intrínsecas do canal de comunicação para garantir a confidencialidade \cite{Mukherjee2014}. O canal THz possui propriedades físicas únicas, notavelmente a absorção molecular seletiva em frequência (e.g., por H₂O e O₂) e a predominância de enlaces de linha de visada (LoS) \cite{Han2018}. Essas características, vistas como desafios de propagação, são espacialmente localizadas e temporalmente dinâmicas, criando uma "impressão digital" (fingerprint) única e recíproca entre comunicantes legítimos \cite{Ma2018}.
+
+A hipótese central desta pesquisa é que a alta sensibilidade do canal THz às condições atmosféricas e ao ambiente físico pode ser explorada para extrair primitivas de segurança robustas. Técnicas de PLS tradicionais, que dependem de rico multipercurso, falham em canais THz dominados por LoS \cite{Wang2017mmWave}. Esta proposta visa suprir essa lacuna, investigando a absorção molecular como fonte primária de aleatoriedade.
+
+\subsection{Problema e Perguntas de Pesquisa}
+
+O problema de pesquisa é a inadequação das primitivas de PLS existentes para canais THz dominados por LoS e a necessidade de novos métodos que explorem as propriedades físicas únicas desse domínio. Para operacionalizar a hipótese, formulam-se as seguintes perguntas de pesquisa (PQs):
+
+% Alterado de itemize para alineas (padrão abntex2 para 'a)', 'b)') e removido PQ1/PQ2
+\begin{alineas}
+    \item Como as propriedades de absorção molecular e espalhamento do canal THz em ambientes (indoor e outdoor) podem ser modeladas e quantificadas para gerar chaves criptográficas com alta entropia e baixa correlação espacial?
+    \item Qual metodologia e quais protocolos permitem a autenticação contínua de dispositivos e a geração eficiente de chaves em canais THz, garantindo segurança contra adversários passivos e apresentando trade-offs viáveis entre segurança, taxa de chave e complexidade computacional?
+\end{alineas}
+
+\subsection{Delimitação da Pesquisa}
+
+Esta pesquisa focará na caracterização teórica e simulacional das primitivas de segurança. O escopo será delimitado da seguinte forma:
+% Alterado de itemize para alineas
+\begin{alineas}
+    \item \textbf{Frequência:} A análise se concentrará na faixa de sub-THz (100-300 GHz), onde as janelas de transmissão atmosférica e os picos de absorção molecular são bem definidos e promissores para implementações iniciais do 6G.
+    \item \textbf{Cenários:} Serão investigados cenários de comunicação indoor (industriais) e outdoor (urbanos), ambos estáticos e com baixa mobilidade.
+    \item \textbf{Fora do Escopo:} Ficarão fora do escopo desta tese a implementação de hardware e prototipagem, bem como a defesa contra ataques ativos complexos (e.g., jamming inteligente ou ataques de personificação por reconfiguração de superfícies). O foco será em adversários passivos (interceptadores).
+\end{alineas}

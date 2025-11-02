@@ -1,0 +1,27 @@
+\section{REFERENCIAL TEÓRICO}
+
+Esta seção fundamenta a pesquisa nos pilares da segurança da informação, propagação em THz e técnicas de PLS, identificando as lacunas que esta proposta visa preencher.
+
+\subsection{Segurança da Camada Física: Fundamentos e Evolução}
+
+A segurança da informação foi tradicionalmente relegada às camadas superiores do modelo OSI, baseando-se na complexidade computacional de problemas matemáticos \cite{Alagic2020}. No entanto, os fundamentos teóricos da segurança da informação, estabelecidos por Shannon \cite{Shannon1949}, mostraram que a segurança perfeita é possível se a incerteza (entropia) da chave for maior ou igual à entropia da mensagem.
+
+A PLS aplica essa teoria ao canal sem fio. O trabalho seminal de Wyner sobre o "canal de escuta" (wiretap channel) \cite{Wyner1975} provou que é possível estabelecer comunicação segura (com taxa de sigilo positiva) se o canal do usuário legítimo (Bob) for superior ao canal do interceptador (Eve). Trabalhos subsequentes de Csiszár e Körner \cite{Csiszar1978} generalizaram essa noção. A PLS moderna evoluiu para duas abordagens principais: (1) codificação de sigilo, que explora a vantagem do canal, e (2) geração de chaves secretas (SKG), que explora a reciprocidade e aleatoriedade do canal para destilar uma chave compartilhada, conforme explorado por Maurer \cite{Maurer1993}. Esta tese foca na segunda abordagem.
+
+\subsection{Propagação e Caracterização de Canais Terahertz}
+
+A faixa de THz (0.1-10 THz) é a principal candidata para o 6G devido à sua vasta largura de banda \cite{Rappaport2019}. No entanto, a propagação nesse domínio é singular. Ela é dominada por duas características: (1) alta perda de propagação (espalhamento), que favorece enlaces direcionais LoS, e (2) absorção molecular, onde gases como vapor d'água (H₂O) e oxigênio (O₂) absorvem energia em frequências de ressonância específicas \cite{Han2018}.
+
+Modelos de canal precisos são essenciais. A absorção gasosa é bem caracterizada por modelos físicos baseados em bancos de dados espectroscópicos como o HITRAN \cite{Gordon2022} e padronizados pela recomendação ITU-R P.676-12 \cite{ITU2019}. O espalhamento e o multipercurso, embora atenuados, existem e são modelados por técnicas de traçamento de raios (ray-tracing) \cite{Ma2018}. A combinação da natureza LoS-dominante com a alta sensibilidade atmosférica é a chave para esta pesquisa: o canal é estável o suficiente para ser recíproco, mas dinâmico o suficiente para gerar entropia.
+
+\subsection{Técnicas de Geração de Chaves Baseadas em Canal (SKG)}
+
+A Geração de Chaves Secretas (SKG) baseada em canal explora três propriedades: (1) \textbf{Reciprocidade do Canal:} Em TDD, o canal $h_{AB}$ (Alice $\rightarrow$ Bob) é igual a $h_{BA}$ (Bob $\rightarrow$ Alice) dentro do tempo de coerência. (2) \textbf{Variabilidade Temporal:} O canal muda ao longo do tempo (devido a mobilidade ou mudanças atmosféricas), gerando novas chaves. (3) \textbf{Decorrelação Espacial:} Um interceptador (Eve) a mais de meia comprimento de onda de distância observará um canal $h_{AE}$ totalmente diferente de $h_{AB}$ \cite{Mukherjee2014}.
+
+O processo de SKG envolve: sondagem do canal, quantização (para converter medições analógicas em bits), reconciliação de informação (para corrigir erros usando protocolos como o Cascade \cite{Brassard1993}) e amplificação de privacidade (para remover correlações parciais). Enquanto a maioria dos trabalhos foca no multipercurso em bandas sub-6 GHz ou mmWave \cite{Wang2017mmWave, Baracca2018}, esta abordagem é ineficaz em THz LoS. Poucos trabalhos, como \cite{Zhou2021}, começaram a explorar a absorção molecular, mas uma metodologia robusta e quantificada ainda é uma lacuna em aberto.
+
+\subsection{Autenticação por Características Físicas (PUFs de Canal)}
+
+A autenticação física visa verificar a identidade de um dispositivo usando suas características físicas infalsificáveis. O canal sem fio atua como uma Função Física Não Clonável (Physical Unclonable Function - PUF), pois a Resposta ao Impulso do Canal (CIR) é única para a localização do transmissor \cite{Herder2014}.
+
+Em THz, a alta direcionalidade e os padrões de espalhamento únicos tornam o fingerprint do canal (e.g., o Perfil de Atraso de Potência - PDP) extremamente sensível à posição \cite{Nguyen2022}. Um adversário tentando um ataque de spoofing não pode replicar a assinatura CIR exata de Alice sem estar fisicamente no mesmo local \cite{Ma2018}. A literatura recente explora isso \cite{Basat2023}, mas carece de modelos robustos que considerem as propriedades estatísticas específicas das assinaturas THz (esparsidade, sensibilidade atmosférica) para detecção robusta.
