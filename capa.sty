@@ -1,7 +1,7 @@
 % ---
 % INICIO DAS CUSTOMIZACOES (ARQUIVO capa.sty)
 % ---
-\ProvidesPackage{capa}[2025/XX/XX Customizacao para Doutorado em Engenharia Eletrica - UnB]
+\ProvidesPackage{capa}[2025/11/02 Customizacao para Doutorado em Engenharia Eletrica - UnB]
 
 % Comandos para os novos campos
 \newcommand{\linhadepesquisa}[1]{\gdef\@linhadepesquisa{#1}}
@@ -12,57 +12,64 @@
 \makeatletter % Necessário para usar \@areadeconcentracao etc.
 
 % ---
-% CAPA (AGORA CONTÉM O LAYOUT DA FOLHA DE ROSTO)
+% CAPA
 % ---
 \renewcommand{\imprimircapa}{%
   \begin{capa}%
   \begin{center}
 
-  % Logo da universidade
-  % (O caminho 'imagens/unb_bandeira.png' vem do seu .sty antigo)
-  \includegraphics[width=70mm]{imagens/unb_bandeira.png}\\[0.5cm]
+  % Logo da universidade (se existir)
+  \IfFileExists{imagens/unb_bandeira.png}{%
+    \includegraphics[width=70mm]{imagens/unb_bandeira.png}\\[0.3cm]
+  }{%
+    % Se não houver logo, deixar espaço
+    \vspace*{1cm}
+  }
 
-  % Instituicao (UnB, FT, PPGEE) - Puxa do \instituicao [cite: 1, 2, 3]
-  {\ABNTEXchapterfont\Large\imprimirinstituicao}
+  % Instituicao (UnB, FT, PPGEE) - FONTE NORMAL DO DOCUMENTO
+  {\Large\imprimirinstituicao}
       
   \vspace*{1.5cm}
       
-  % Autor [cite: 5]
-  {\ABNTEXchapterfont\large\imprimirautor}
+  % Autor - FONTE NORMAL
+  {\large\imprimirautor}
 
   \vspace*{\fill}
 
-  % Titulo [cite: 6]
+  % Titulo - FONTE NORMAL, NEGRITO
   \begin{center}
-  \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+  {\bfseries\Large\MakeUppercase{\imprimirtitulo}}
   \end{center}
 
   \vspace*{\fill}
 
-  % Preambulo (O texto do "Pre-projeto apresentado...") [cite: 7]
+  % Preambulo (O texto do "Pre-projeto apresentado...")
   \abntex@ifnotempty{\imprimirpreambulo}{%
-    \hspace{.45\textwidth} % Alinhado à direita
+    \hspace{.45\textwidth}
     \begin{minipage}{.5\textwidth}
     \SingleSpacing
+    \small
     \imprimirpreambulo
     \end{minipage}%
-    \vspace*{\fill}
+    \vspace*{0.5cm}
   }%
 
-  % Novos campos: Area e Linha [cite: 8, 9]
+  % Novos campos: Area e Linha - CENTRALIZADOS
   \abntex@ifnotempty{\@areadeconcentracao}{%
-      \noindent % Alinha à esquerda
-      \begin{minipage}{\textwidth}
+      \begin{center}
       \SingleSpacing
-      \textbf{Área de Concentração:} \imprimirareadeconcentracao \\
+      \small
+      \textbf{Área de Concentração:} \imprimirareadeconcentracao
+      
       \abntex@ifnotempty{\@linhadepesquisa}{%
+          \\
           \textbf{Linha de Pesquisa:} \imprimirlinhadepesquisa
       }%
-      \end{minipage}
+      \end{center}
       \vspace*{\fill}
   }%
 
-  % Local e Data [cite: 10, 11]
+  % Local e Data
   {\large\imprimirlocal}
   \par
   {\large\imprimirdata}
@@ -70,6 +77,7 @@
 
   \end{center}
   \end{capa}
+  \newpage
 }
 
 % folha de rosto - DEIXAR VAZIA para não ter conflito

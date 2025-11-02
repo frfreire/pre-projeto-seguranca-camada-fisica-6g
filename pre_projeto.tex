@@ -31,28 +31,30 @@
 \usepackage{tabularx} 
 \usepackage{enumitem} 
 
-% Configuração de margens
+% Configuração de margens - MAIS ESTREITAS
 \geometry{
     a4paper,
-    left=2.5cm,
-    right=2.5cm,
-    top=2.3cm,
-    bottom=2.3cm
+    left=2.2cm,
+    right=2.2cm,
+    top=2.0cm,
+    bottom=2.0cm
 }
 
-% Configurações de espaçamento
-\singlespacing
+% Configurações de espaçamento - REDUZIDO
+\linespread{0.98}
+\setlength{\baselineskip}{0.95\baselineskip}
 \setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
 
-% Reduzir espaçamentos entre seções
-\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
-\titlespacing*{\section}{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+% Reduzir espaçamentos entre seções - MAIS COMPACTO
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{0.8em}{}
+\titlespacing*{\section}{0pt}{8pt plus 2pt minus 1pt}{4pt plus 1pt minus 1pt}
 
-\titleformat{\subsection}[block]{\normalfont\large\bfseries}{\thesubsection}{1em}{}
-\titlespacing*{\subsection}{0pt}{10pt plus 3pt minus 2pt}{4pt plus 1pt minus 1pt}
+\titleformat{\subsection}[block]{\normalfont\large\bfseries}{\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{6pt plus 2pt minus 1pt}{3pt plus 1pt minus 1pt}
 
-\titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
-\titlespacing*{\subsubsection}{0pt}{8pt plus 2pt minus 1pt}{3pt plus 1pt minus 1pt}
+\titleformat{\subsubsection}[block]{\normalfont\normalsize\bfseries}{\thesubsubsection}{0.8em}{}
+\titlespacing*{\subsubsection}{0pt}{4pt plus 1pt minus 1pt}{2pt plus 1pt minus 1pt}
 
 % Configurações TikZ
 \usetikzlibrary{shapes,arrows,positioning,calc}
@@ -87,7 +89,10 @@
              Programa de Pós-Graduação em Engenharia Elétrica}
 
 % 2. Tipo de trabalho atualizado com o texto EXATO que você forneceu [cite: 7]
-\tipotrabalho{Pré-projeto apresentado ao Programa de Pós-Graduação em Engenharia Elétrica da Faculdade de Tecnologia (PPGEE-FT/UnB), como exigência parcial para preenchimento de vaga no Curso de Doutorado Acadêmico.}
+\preambulo{Pré-projeto apresentado ao Programa de Pós-Graduação 
+em Engenharia Elétrica da Faculdade de Tecnologia (PPGEE-FT/UnB), 
+como exigência parcial para preenchimento de vaga no Curso de 
+Doutorado Acadêmico.}
 
 % 3. Novos campos adicionados (baseado no modelo [cite: 8, 9] e nos seus dados)
 \areadeconcentracao{Telecomunicações e Redes de Comunicação}
