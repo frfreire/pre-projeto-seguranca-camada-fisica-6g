@@ -6,8 +6,58 @@ Esta pesquisa adota um paradigma epistemológico positivista, buscando explicaç
 
 \subsection{Modelagem do Canal THz}
 
-A caracterização do canal será a base da tese. A atenuação atmosférica por absorção molecular será modelada em alta resolução espectral (linha-a-linha) utilizando a base HITRAN 2020 \cite{Gordon2022} e os procedimentos da recomendação ITU-R P.676-12 \cite{ITU2019}, simulando parâmetros atmosféricos variáveis (T: 15-35°C, Umidade Relativa: 20-80\%, Pressão: 1 atm). Modelos de ray-tracing 3D serão implementados em Python (bibliotecas Sionna/Wireless Insite) para capturar reflexões e espalhamentos difusos em cenários específicos: (i) indoor industrial (fábrica 50×50m com obstáculos metálicos) e (ii) outdoor urbano (street canyon 100m com edifícios). A validação incluirá cálculo da entropia disponível H(X) e comparação da função de autocorrelação R(Δd) com trabalhos teóricos \cite{Wang2017mmWave}.
+A caracterização do canal será a base da tese. A atenuação atmosférica por absorção molecular será modelada em alta resolução espectral (linha-a-linha) utilizando a base HITRAN 2020 \cite{Gordon2022} e os procedimentos da recomendação ITU-R P.676-12 \cite{ITU2019}, simulando parâmetros atmosféricos variáveis (T: 15-35°C, Umidade Relativa: 20-80\%, Pressão: 1 atm). 
+
+\textbf{Modelo de Absorção Molecular:} A atenuação específica $\gamma(f)$ em dB/km é modelada por:
+
+\begin{equation}
+\gamma(f) = \gamma_{O_2}(f,P,T) + \gamma_{H_2O}(f,P,T,\text{RH})
+\end{equation}
+
+\noindent onde os termos de oxigênio e vapor d'água são dados por:
+
+\begin{equation}
+\gamma_{\text{gas}}(f) = \sum_{i} S_i(T) \cdot F_i(f,P,T)
+\end{equation}
+
+\noindent com $S_i$ sendo a intensidade de linha espectral da $i$-ésima linha de ressonância e $F_i$ a função de forma de linha (Van Vleck-Weisskopf). A perda de percurso total em dB é:
+
+\begin{equation}
+L_{\text{total}}(d,f) = L_{FS}(d,f) + \gamma(f) \cdot d + L_{\text{scatter}}(d)
+\end{equation}
+
+\noindent onde $L_{FS} = 20\log_{10}(4\pi df/c)$ é a perda de espaço livre, $d$ é a distância, e $L_{\text{scatter}}$ modela espalhamento difuso por superfícies.
+
+Modelos de ray-tracing 3D serão implementados em Python (bibliotecas Sionna/Wireless Insite) para capturar reflexões e espalhamentos difusos em cenários específicos: (i) indoor industrial (sala 50×50×4m com 20 obstáculos metálicos de 2×2m e 5 pilares de concreto 0.5×0.5m, materiais com permissividade dielétrica especificada) e (ii) outdoor urbano (street canyon 100m de comprimento, largura 20m, altura de edifícios 25m, materiais: concreto $\epsilon_r=6.5$, vidro $\epsilon_r=4.0$). 
+
+A validação incluirá: (1) comparação de perfis de absorção $\gamma(f)$ simulados com medições reportadas por Han et al. \cite{Han2018}, (2) cálculo da entropia de Shannon disponível $H(X) = -\sum_i p(x_i)\log_2 p(x_i)$ das medições de canal quantizadas, e (3) análise da função de autocorrelação espacial $R(\Delta d) = \mathbb{E}[h(d) \cdot h^*(d+\Delta d)]$ comparando com modelos teóricos para canais LoS \cite{Wang2017mmWave}.
 
 \subsection{Protocolos de Segurança e Plano de Simulação}
 
-Será considerado um adversário passivo (Eve) localizado a distância $d_E > \lambda/2$ dos nós legítimos. O protocolo de geração de chaves (SKG) seguirá o fluxograma padrão: sondagem de atenuação em N sub-bandas THz (janelas e picos de absorção), quantização multi-nível adaptativa (baseada em média e variância do canal) versus binária simples, reconciliação via protocolo Cascade \cite{Brassard1993} otimizado para CIR esparso, e amplificação com funções hash universais (SHA-256). Para autenticação, a assinatura (PUF) será extraída do PDP usando características como energia recebida, atraso médio, RMS delay spread e tempos/amplitudes dos primeiros K raios, com teste de hipótese Neyman-Pearson para decidir entre usuário legítimo e adversário. As simulações serão executadas em Python 3.10 (SciPy, NumPy, Scikit-learn) via Monte Carlo com $10^5$ iterações por cenário, variando distância Alice-Bob (1-100m), distância de Eve, mobilidade (0-3 m/s) e número de sub-bandas. As métricas incluem: para SKG, taxa de geração de chave (KGR), taxa de discordância de bits (KDR) e entropia da chave; para autenticação, probabilidade de detecção (Pd) e falso alarme (Pfa) com curvas ROC. Os resultados serão apresentados com intervalos de confiança 95\% e testes ANOVA para validar o impacto dos parâmetros nas métricas de desempenho.
+Será considerado um adversário passivo (Eve) localizado em 50 posições aleatórias uniformemente distribuídas em círculo de raio 10m ao redor de Alice, com distância mínima $d_E > \lambda/2$ dos nós legítimos. 
+
+\textbf{Protocolo de Geração de Chaves (SKG):} O fluxo seguirá: (1) sondagem de atenuação em $N$ sub-bandas THz (janelas e picos de absorção), (2) quantização multi-nível adaptativa (baseada em média $\mu$ e variância $\sigma^2$ do canal) versus binária simples, (3) reconciliação via protocolo Cascade \cite{Brassard1993} otimizado para CIR esparso, e (4) amplificação de privacidade com funções hash universais (SHA-256). 
+
+\textbf{Métricas de Desempenho:} A taxa de geração de chaves (KGR) em bits/s/Hz é:
+
+\begin{equation}
+\text{KGR} = \frac{I(X_A;X_B) - I(X_A;X_E)}{T_{\text{probe}}}
+\end{equation}
+
+\noindent onde $X_A$, $X_B$, $X_E$ são as medições de Alice, Bob e Eve, e $T_{\text{probe}}$ é o tempo de sondagem. A taxa de discordância (KDR) é avaliada por:
+
+\begin{equation}
+\text{KDR} = P[K_A \neq K_B] = 1 - \exp(-\epsilon_{\text{quant}} \cdot \text{SNR}^{-1})
+\end{equation}
+
+\noindent onde $\epsilon_{\text{quant}}$ é o erro de quantização. 
+
+\textbf{Autenticação:} A assinatura (PUF) será extraída do PDP usando características como energia recebida, atraso médio, RMS delay spread e tempos/amplitudes dos primeiros $K$ raios. O teste de hipótese Neyman-Pearson decidirá entre $H_1$ (usuário legítimo) versus $H_0$ (atacante). A probabilidade de detecção é:
+
+\begin{equation}
+P_d = P[\Lambda(y) > \gamma | H_1] = Q\left(\frac{\gamma - \mu_1}{\sigma_1}\right)
+\end{equation}
+
+\noindent onde $\Lambda(y)$ é a razão de verossimilhança, $\gamma$ é o limiar de decisão, $Q(\cdot)$ é a função Q gaussiana complementar, e $\mu_1$, $\sigma_1$ são média e desvio-padrão sob $H_1$.
+
+As simulações serão executadas em Python 3.10 (SciPy, NumPy, Scikit-learn) via Monte Carlo com $10^5$ iterações por cenário, variando distância Alice-Bob (1-100m), distância de Eve, mobilidade (0-3 m/s) e número de sub-bandas ($N = 4, 8, 16$). Os resultados serão apresentados com intervalos de confiança 95\% e testes ANOVA para validar o impacto dos parâmetros nas métricas de desempenho. Os protocolos propostos serão comparados com técnicas de SKG baseadas em multipercurso adaptadas para THz como baseline de desempenho.

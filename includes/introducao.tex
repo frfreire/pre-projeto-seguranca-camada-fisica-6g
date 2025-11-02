@@ -4,11 +4,27 @@ A sexta geração (6G) de redes sem fio impulsiona a exploração da faixa de Te
 
 Neste contexto, a Segurança da Camada Física (PLS) surge como uma abordagem complementar, explorando as características intrínsecas do canal de comunicação para garantir a confidencialidade \cite{Mukherjee2014}. O canal THz possui propriedades físicas distintivas, incluindo a absorção molecular seletiva em frequência (e.g., por H₂O e O₂) e a predominância de enlaces de linha de visada (LoS) \cite{Han2018}. Essas características, vistas como desafios de propagação, são espacialmente localizadas e temporalmente dinâmicas, criando uma "impressão digital" (fingerprint) recíproca entre comunicantes legítimos \cite{Ma2018}.
 
-A hipótese central desta pesquisa é que a alta sensibilidade do canal THz às condições atmosféricas e ao ambiente físico pode ser explorada para extrair primitivas de segurança. Técnicas de PLS tradicionais, que dependem de rico multipercurso, falham em canais THz dominados por LoS \cite{Wang2017mmWave}. Esta proposta visa suprir essa lacuna, investigando a absorção molecular como fonte primária de aleatoriedade.
+A hipótese central desta pesquisa é que a alta sensibilidade do canal THz às condições atmosféricas e ao ambiente físico pode ser explorada para extrair primitivas de segurança. Técnicas de PLS tradicionais, que dependem de rico multipercurso, falham em canais THz dominados por LoS \cite{Wang2017mmWave}. Esta proposta visa suprir essa lacuna, investigando a variabilidade temporal da absorção molecular atmosférica como fonte primária de aleatoriedade para geração de chaves secretas. Embora Fang et al. \cite{Fang2022} tenham demonstrado que a absorção atmosférica pode ser explorada para limitar o alcance de sinais THz e criar zonas de segurança, nenhum trabalho estabeleceu protocolo de SKG que explore as flutuações atmosféricas como fonte de entropia.
 
 \subsection{Problema e Perguntas de Pesquisa}
 
-O problema de pesquisa é a inadequação das primitivas de PLS existentes para canais THz dominados por LoS e a necessidade de novos métodos que explorem as propriedades físicas desse domínio. Para operacionalizar a hipótese, formulam-se as seguintes perguntas de pesquisa: \textbf{(PQ1)} Como as propriedades de absorção molecular e espalhamento do canal THz em ambientes (indoor e outdoor) podem ser modeladas e quantificadas para gerar chaves criptográficas com alta entropia e baixa correlação espacial? \textbf{(PQ2)} Qual metodologia e quais protocolos permitem a autenticação contínua de dispositivos e a geração eficiente de chaves em canais THz, garantindo segurança contra adversários passivos e apresentando trade-offs viáveis entre segurança, taxa de chave e complexidade computacional?
+O problema de pesquisa é a inadequação das primitivas de PLS existentes para canais THz dominados por LoS e a necessidade de novos métodos que explorem as propriedades físicas desse domínio para geração de chaves secretas.
+
+Considere um canal THz entre Alice e Bob com resposta em frequência $H_{AB}(f, t)$ influenciada pela absorção molecular $\alpha(f, d, \theta)$, onde $\theta = [T, \text{RH}, P]$ representa parâmetros atmosféricos (temperatura, umidade relativa, pressão). O problema central é:
+
+Maximizar: $R_s = I(K_A; K_B) - I(K_A; K_E)$ \hfill (1)
+
+sujeito a:
+
+$H(K_A|K_B) \leq \epsilon_1$ (baixa discordância entre nós legítimos) \hfill (2)
+
+$I(K_A; K_E) \leq \epsilon_2$ (informação vazada para Eve limitada) \hfill (3)
+
+$\mathbb{E}[|\alpha(f, d, \theta)|] > \sigma_{\text{min}}$ (entropia mínima da absorção) \hfill (4)
+
+onde $R_s$ é a taxa de sigilo (secrecy rate), $K_A$ e $K_B$ são as chaves extraídas por Alice e Bob, $K_E$ é a informação de Eve, $H(\cdot|\cdot)$ é entropia condicional, e $I(\cdot; \cdot)$ é informação mútua.
+
+Para operacionalizar a hipótese, formulam-se as seguintes perguntas de pesquisa: \textbf{(PQ1)} Como as propriedades de absorção molecular e espalhamento do canal THz em ambientes (indoor e outdoor) podem ser modeladas e quantificadas para gerar chaves criptográficas com alta entropia e baixa correlação espacial? \textbf{(PQ2)} Qual metodologia e quais protocolos permitem a autenticação contínua de dispositivos e a geração eficiente de chaves em canais THz, garantindo segurança contra adversários passivos e apresentando trade-offs viáveis entre segurança, taxa de chave e complexidade computacional?
 
 \subsection{Delimitação da Pesquisa}
 

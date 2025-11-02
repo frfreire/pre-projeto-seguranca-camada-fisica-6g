@@ -115,7 +115,10 @@ Doutorado Acadêmico.}
 \input{includes/cronograma}
 
 % Bibliografia
-\newpage
+\renewcommand{\bibsection}{%
+  \section*{REFERÊNCIAS BIBLIOGRÁFICAS}%
+}
+
 \bibliography{bibliografia}
 \bibliographystyle{abntex2-num}
 
